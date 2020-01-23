@@ -1,26 +1,26 @@
-6	,	1	,		,	Ringlicht
-17	,	2	,		,	Ringlicht
+1	,		,		,	Ringlicht
+2	,		,		,	Ringlicht
+3	,		,		,	Ringlicht
 4	,	3	,		,	Ringlicht
-22	,	4	,		,	Ringlicht
-10	,	5	,		,	Ringlicht
-9	,	6	,		,	Ringlicht
-11	,	7	,		,	Ringlicht
-18	,	8	,		,	Ringlicht
-23	,	9	,		,	Ringlicht
-24	,	10	,		,	Ringlicht
-8	,	12	,		,	Ringlicht
+5	,		,		,	Ringlicht
+6	,	1	,		,	Ringlicht
 7	,	13	,		,	Ringlicht
-25	,	13	,		,	
-1	,		,		,	
-2	,		,		,	
-3	,		,		,	
-5	,		,		,	
-12	,		,		,	
-13	,		,	Rs-Switch	,	Reset für PC
+8	,	12	,		,	Ringlicht
+9	,	6	,		,	Ringlicht
+10	,	5	,		,	Ringlicht
+11	,	7	,		,	Ringlicht
+12	,		,		,	Ringlicht
+13	,		,		,	
 14	,		,		,	
 15	,		,		,	
 16	,		,		,	
-19	,		,	Pw-Switch	,	Power für Pc
+17	,	2	,		,	
+18	,	8	,		,	
+19	,		,	Rs-Switch	,	Reset für PC
 20	,		,		,	
 21	,		,		,	
+22	,	4	,		,	
+23	,	9	,	Pw-Switch	,	Power für Pc
+24	,	10	,		,	
+25	,	13	,		,	
 26	,		,	Pc-State	,	5v Abfrage
