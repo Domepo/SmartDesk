@@ -41,7 +41,7 @@ window.addEventListener("load",function(){
         label_for_recieve_button.innerHTML = "Send";
     }
     //get input data
-    function get_radio_data(){
+    function get_radio_data(callback){
 
         let box_listener = document.getElementById("radio-boxes");
 
@@ -53,7 +53,7 @@ window.addEventListener("load",function(){
                 const removeClass = (elms) => elms.forEach(el => el.remove());
                 removeClass(document.querySelectorAll(".master-id-class") );
 
-                create_id_name_master_field();
+                callback();
             }
             if (document.getElementById("radio-recieve-button-id").checked == true) {
 
@@ -73,7 +73,9 @@ window.addEventListener("load",function(){
             label_for_id_field      = document.createElement("label"),
             label_for_name_field    = document.createElement("label"),
             n_filter                = document.createElement("input"),
-            label_for_n_filter      = document.createElement("label");
+            label_for_n_filter      = document.createElement("label"),
+            ready_button            = document.createElement("button");
+
 
         field_for_id_and_master.setAttribute("class","master-id-class");    
         field_for_id_and_master.setAttribute("id","master-id-id");   
@@ -88,7 +90,9 @@ window.addEventListener("load",function(){
         n_filter.setAttribute("class","n_filter_style")
         n_filter.setAttribute("id","n-filter");
 
-        label_for_id_field.setAttribute("for","n_filter");
+        label_for_n_filter.setAttribute("for","n_filter");
+
+        ready_button.setAttribute("id","ready-button");
 
         can_frontend.appendChild(field_for_id_and_master);
     
@@ -98,19 +102,32 @@ window.addEventListener("load",function(){
         field_for_id_and_master.appendChild(master_name_field);
         field_for_id_and_master.appendChild(label_for_n_filter);
         field_for_id_and_master.appendChild(n_filter);
+        field_for_id_and_master.appendChild(ready_button);
+
         
-
-
 
         label_for_name_field.innerHTML  = "Name : ";
         label_for_id_field.innerHTML    = "ID : ";
         label_for_n_filter.innerHTML    = "Wie viele? ";
+        ready_button.innerHTML          = "Go";
+
+        ready_button.addEventListener("click",()=>{
+            let test = document.getElementById("n-filter").value;
+            console.log(test);
+        });
+    }
+
+    // adhsahiapiohdpoiwahüdoih
+    // Den ganzen Schrott nochmal überarbeiten und in create_id_name_master_field rein packen mit listener du HIdn
+    function  get_n_filter_value(){
+        
     }
 
 
-
     create_radio_box();
-    get_radio_data();
+    get_radio_data(create_id_name_master_field);
+
+
 
 
 }); 
