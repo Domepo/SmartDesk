@@ -52,14 +52,19 @@ window.addEventListener("load",function(){
                 // provide infinte Loop
                 const removeClass = (elms) => elms.forEach(el => el.remove());
                 removeClass(document.querySelectorAll(".master-id-class") );
+                removeClass(document.querySelectorAll(".filter_div_style") );
 
                 callback();
             }
             if (document.getElementById("radio-recieve-button-id").checked == true) {
 
-                if ( document.getElementById("master-id-id") != null)   {
-                document.getElementById("master-id-id").style.display = "none";
-                }
+                // if ( document.getElementById("master-id-id") != null)   {
+                // document.getElementById("master-id-id").style.display = "none";
+
+                // }
+                const removeClass = (elms) => elms.forEach(el => el.remove());
+                removeClass(document.querySelectorAll(".master-id-class") );
+                removeClass(document.querySelectorAll(".filter_div_style") );
             }
         
         });
@@ -112,20 +117,50 @@ window.addEventListener("load",function(){
         ready_button.innerHTML          = "Go";
 
         ready_button.addEventListener("click",()=>{
-            let test = document.getElementById("n-filter").value;
-            console.log(test);
+
+            const removeClass = (elms) => elms.forEach(el => el.remove());
+            removeClass(document.querySelectorAll(".filter_div_style") );
+
+            let get_n_filter_value = document.getElementById("n-filter").value;
+            for(let i=0;i<get_n_filter_value;i++){
+                create_filter_box(get_n_filter_value,i,i,i);
+            }
         });
     }
 
-    // adhsahiapiohdpoiwahüdoih
-    // Den ganzen Schrott nochmal überarbeiten und in create_id_name_master_field rein packen mit listener du HIdn
-    function  get_n_filter_value(){
-        
+    function create_filter_box(value,div_n,name_n,id_n){
+
+        let filter_div                  = document.createElement("div"),
+        filter_box_name                 = document.createElement("input"),
+        filter_box_id                   = document.createElement("input"),
+        label_for_filter_name           = document.createElement("label"),
+        label_for_filter_id             = document.createElement("label");
+
+        label_for_filter_id.setAttribute("for","filter_box_id");
+        label_for_filter_name.setAttribute("for","filter_box_name");
+
+        filter_div.setAttribute("class","filter_div_style");
+        filter_div.setAttribute("id","filter_div_id"+div_n);
+
+        filter_box_name.setAttribute("id","box_name"+name_n);
+        filter_box_id.setAttribute("id","id_name"+id_n);
+
+
+        can_frontend.appendChild(filter_div);
+        filter_div.appendChild(label_for_filter_name);
+        filter_div.appendChild(filter_box_name);
+        filter_div.appendChild(label_for_filter_id);
+        filter_div.appendChild(filter_box_id);
+
+        label_for_filter_id.innerHTML = "ID";
+        label_for_filter_name.innerHTML ="Name";
+
     }
 
 
     create_radio_box();
     get_radio_data(create_id_name_master_field);
+
 
 
 
