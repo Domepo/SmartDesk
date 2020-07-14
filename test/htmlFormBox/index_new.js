@@ -23,6 +23,7 @@ window.addEventListener("load",function(){
         radio_recieve_button.setAttribute("type","radio");
         radio_recieve_button.setAttribute("name","recieve_and_send_radio");
         radio_send_button.setAttribute("name","recieve_and_send_radio");
+
         radio_send_button.setAttribute("id","radio-send-button-id");
         radio_recieve_button.setAttribute("id","radio-recieve-button-id")
 
@@ -49,7 +50,10 @@ window.addEventListener("load",function(){
 
         box_listener.addEventListener("click",  ()=>  {
 
-            if (document.getElementById("radio-send-button-id").checked == true) {
+            if (document.getElementById("radio-recieve-button-id").checked == false) {
+
+              //reactivate radio button
+                document.getElementById("radio-recieve-button-id").disabled = false;
 
                 // provide infinte Loop
                 const removeClass = (elms) => elms.forEach(el => el.remove());
@@ -58,10 +62,13 @@ window.addEventListener("load",function(){
                 removeClass(document.querySelectorAll(".more_class") );
 
                 callback();
-                
-            }
-            if (document.getElementById("radio-recieve-button-id").checked == true) {
+                // Disable a repeat button press
+                document.getElementById("radio-send-button-id").disabled = true;
 
+            }
+            if (document.getElementById("radio-send-button-id").checked == false) {
+  
+                document.getElementById("radio-send-button-id").disabled = false;
                 // if ( document.getElementById("master-id-id") != null)   {
                 // document.getElementById("master-id-id").style.display = "none";
 
@@ -70,7 +77,8 @@ window.addEventListener("load",function(){
                 removeClass(document.querySelectorAll(".master-id-class") );
                 removeClass(document.querySelectorAll(".filter_div_style") );
                 removeClass(document.querySelectorAll(".more_class") );
-
+                console.log("SEND");
+                document.getElementById("radio-recieve-button-id").disabled = true;
             }
         
         });
@@ -109,7 +117,7 @@ window.addEventListener("load",function(){
 
         label_for_n_filter.setAttribute("for","n_filter");
 
-        ready_button.setAttribute("id","ready-button");
+        ready_button.setAttribute("id","ready-button"+counter);
 
         can_frontend.appendChild(field_for_id_and_master);
 
@@ -157,6 +165,7 @@ window.addEventListener("load",function(){
                 console.log(counter);
                     add_obj();
                 }
+            document.getElementById("ready-button"+counter).disabled = true;                
         });
 
     }
