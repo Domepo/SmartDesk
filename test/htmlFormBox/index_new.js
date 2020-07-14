@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 let can_frontend = document.createElement("div");
 let count = 0;
 window.addEventListener("load",function(){
@@ -79,6 +81,8 @@ window.addEventListener("load",function(){
             counter = 0;
         }
 
+
+        
         let field_for_id_and_master = document.createElement("div"),
             master_id_field         = document.createElement("input"),
             master_name_field       = document.createElement("input"),
@@ -108,7 +112,7 @@ window.addEventListener("load",function(){
         ready_button.setAttribute("id","ready-button");
 
         can_frontend.appendChild(field_for_id_and_master);
-        
+
         field_for_id_and_master.appendChild(bracket);
         field_for_id_and_master.appendChild(label_for_id_field);
         field_for_id_and_master.appendChild(master_id_field);
@@ -118,18 +122,27 @@ window.addEventListener("load",function(){
         field_for_id_and_master.appendChild(n_filter);
         field_for_id_and_master.appendChild(ready_button);
 
-        
 
         label_for_name_field.innerHTML  = "Name : ";
         label_for_id_field.innerHTML    = "ID : ";
         label_for_n_filter.innerHTML    = "Wie viele? ";
         ready_button.innerHTML          = "Go";
 
+
+        // if(document.getElementById(counter+"filter_div_id1")!=null){
+        //     console.log(document.getElementById(counter+"filter_div_id1"));
+        //     console.log(counter+"filter_div_id1");
+        //  }
+
+
+
         ready_button.addEventListener("click",()=>{
 
+
             const removeClass = (elms) => elms.forEach(el => el.remove());
-            // removeClass(document.querySelectorAll(".filter_div_style") );
+            //removeClass(document.querySelectorAll(".filter_div_style") );
             removeClass(document.querySelectorAll(".more_class") );
+
 
             let get_n_filter_value = document.getElementById("n-filter"+counter).value;
 
@@ -138,7 +151,12 @@ window.addEventListener("load",function(){
             }
             //if there is more than one object
 
-            add_obj();
+            let int_get_n_filter_value = parseInt(get_n_filter_value);
+            //show "more" only if there is any value
+            if(int_get_n_filter_value > 0){
+                console.log(counter);
+                    add_obj();
+                }
         });
 
     }
@@ -151,18 +169,21 @@ window.addEventListener("load",function(){
         add_button.setAttribute("class","more_class");
         add_button.setAttribute("id","more-id");
 
-        can_frontend.appendChild(add_border);
-        add_border.appendChild(add_button);
+        can_frontend.appendChild(add_button);
 
         add_button.innerHTML = "More";
 
-        
+
         let master_more_button = document.getElementById("more-id");
         master_more_button.addEventListener("click",()=>{
-            count++;
-            create_id_name_master_field(count);
 
-            
+            count++;
+    
+            create_id_name_master_field(count);
+            add_obj(count);
+
+            const removeClass = (elms) => elms.forEach(el => el.remove());
+            removeClass(document.querySelectorAll(".more_class") );
         });
 
     }
