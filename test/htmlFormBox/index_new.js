@@ -53,7 +53,7 @@ window.addEventListener("load",function(){
                 const removeClass = (elms) => elms.forEach(el => el.remove());
                 removeClass(document.querySelectorAll(".master-id-class") );
                 removeClass(document.querySelectorAll(".filter_div_style") );
-                removeClass(document.querySelectorAll(".ok") );
+                removeClass(document.querySelectorAll(".more_class") );
 
                 callback();
                 
@@ -67,7 +67,7 @@ window.addEventListener("load",function(){
                 const removeClass = (elms) => elms.forEach(el => el.remove());
                 removeClass(document.querySelectorAll(".master-id-class") );
                 removeClass(document.querySelectorAll(".filter_div_style") );
-                removeClass(document.querySelectorAll(".ok") );
+                removeClass(document.querySelectorAll(".more_class") );
 
             }
         
@@ -90,7 +90,7 @@ window.addEventListener("load",function(){
             bracket                 = document.createElement("br");
 
         
-        field_for_id_and_master.setAttribute("class","master-id-class"+counter);    
+        field_for_id_and_master.setAttribute("class","master-id-class");    
         field_for_id_and_master.setAttribute("id","master-id-id"+counter);   
         
         label_for_id_field.setAttribute("for","master_id_field"+counter);
@@ -128,8 +128,8 @@ window.addEventListener("load",function(){
         ready_button.addEventListener("click",()=>{
 
             const removeClass = (elms) => elms.forEach(el => el.remove());
-            removeClass(document.querySelectorAll(".filter_div_style") );
-            removeClass(document.querySelectorAll(".ok") );
+            // removeClass(document.querySelectorAll(".filter_div_style") );
+            removeClass(document.querySelectorAll(".more_class") );
 
             let get_n_filter_value = document.getElementById("n-filter"+counter).value;
 
@@ -139,7 +139,6 @@ window.addEventListener("load",function(){
             //if there is more than one object
 
             add_obj();
-
         });
 
     }
@@ -149,8 +148,8 @@ window.addEventListener("load",function(){
         let add_border                  = document.createElement("div"),
         add_button                      = document.createElement("button");
 
-        add_button.setAttribute("class","ok");
-        add_button.setAttribute("id","jaw");
+        add_button.setAttribute("class","more_class");
+        add_button.setAttribute("id","more-id");
 
         can_frontend.appendChild(add_border);
         add_border.appendChild(add_button);
@@ -158,7 +157,7 @@ window.addEventListener("load",function(){
         add_button.innerHTML = "More";
 
         
-        let master_more_button = document.getElementById("jaw");
+        let master_more_button = document.getElementById("more-id");
         master_more_button.addEventListener("click",()=>{
             count++;
             create_id_name_master_field(count);
@@ -183,7 +182,7 @@ window.addEventListener("load",function(){
         label_for_filter_id.setAttribute("for",master_identifier+"filter_box_id");
         label_for_filter_name.setAttribute("for",master_identifier+"filter_box_name");
 
-        filter_div.setAttribute("class",master_identifier+"filter_div_style");
+        filter_div.setAttribute("class","filter_div_style");
         filter_div.setAttribute("id",master_identifier+"filter_div_id"+div_n);
 
         filter_box_name.setAttribute("id",master_identifier+"box_name"+name_n);
