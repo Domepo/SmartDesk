@@ -162,10 +162,11 @@ window.addEventListener("load",function(){
             let int_get_n_filter_value = parseInt(get_n_filter_value);
             //show "more" only if there is any value
             if(int_get_n_filter_value > 0){
+                document.getElementById("ready-button"+counter).disabled = true;  
                 console.log(counter);
                     add_obj();
                 }
-            document.getElementById("ready-button"+counter).disabled = true;                
+                          
         });
 
     }
