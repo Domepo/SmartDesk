@@ -20,9 +20,25 @@ fs.readFile("data.json","utf8",function(err,data){
     var parsedDataJson = JSON.parse(data);
     var TimeInGoodFormat = secsToCurrentDate(msg.ts_sec);
 
-    parsedDataJson.Knopflicht.id = msg.id;
-    parsedDataJson.Knopflicht.data = msg.data;
-    parsedDataJson.Knopflicht.timestamp = TimeInGoodFormat;
+    if(msg.id == 96){
+        
+        parsedDataJson["can1"] = {};
+        parsedDataJson.can1["id"] = msg.id;
+        parsedDataJson.can1["data"] = msg.data;
+        parsedDataJson.can1["timecode"] = TimeInGoodFormat;
+    }
+
+
+
+
+    if(msg.id == 112){
+        parsedDataJson["can2"] = {};
+        parsedDataJson.can2["id"] = msg.id;
+        parsedDataJson.can2["data"] = msg.data;
+        parsedDataJson.can2["timecode"] = TimeInGoodFormat;
+    }
+
+
 
     var dataOutput = JSON.stringify(parsedDataJson,null,"\t");
 
