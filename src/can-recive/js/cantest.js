@@ -1,24 +1,37 @@
 var can = require('socketcan');
-//our canbus is the can0
+var fs = require("fs");
+
+
 var channel = can.createRawChannel("can0", true);
 
-// Log all data [8bit]
+
 channel.addListener("onMessage", function(msg) {
   
-const buf1 = Buffer.from(msg.data);
 
-let json = buf1.toJSON();
+function secsToCurrentDate(secs) {
+    var date_output = new Date(1970, 0, 1); //since 1970
+    date_output.setSeconds(secs);
+    return date_output;
+}
 
-let djson = {
-    "id": 123,
-    "msg": 1
-};
-djson.id = msg.id;
-djson.msg = json["data"];
-console.log(djson)
+
+fs.readFile("data.json","utf8",function(err,data){
+
+    var parsedDataJson = JSON.parse(data);
+    var TimeInGoodFormat = secsToCurrentDate(msg.ts_sec);
+
+    parsedDataJson.Knopflicht.id = msg.id;
+    parsedDataJson.Knopflicht.data = msg.data;
+    parsedDataJson.Knopflicht.timestamp = TimeInGoodFormat;
+
+    var dataOutput = JSON.stringify(parsedDataJson,null,"\t");
+
+    fs.writeFile("data.json",dataOutput,(err)=>{});
+
+
+});
 
 ;});
-// Log everything | uncomment this and comment the code above
-//channel.addListener("onMessage", function(msg) { console.log(msg); } );
 
 channel.start();
+
