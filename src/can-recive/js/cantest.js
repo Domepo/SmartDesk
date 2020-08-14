@@ -1,6 +1,7 @@
 var can = require('socketcan');
 var fs = require("fs");
 
+var arrayForCanIDStorage = [];
 
 var channel = can.createRawChannel("can0", true);
 
@@ -20,29 +21,32 @@ fs.readFile("data.json","utf8",function(err,data){
     var parsedDataJson = JSON.parse(data);
     var TimeInGoodFormat = secsToCurrentDate(msg.ts_sec);
 
-    if(msg.id == 96){
-        
-        parsedDataJson["can1"] = {};
-        parsedDataJson.can1["id"] = msg.id;
-        parsedDataJson.can1["data"] = msg.data;
-        parsedDataJson.can1["timecode"] = TimeInGoodFormat;
+
+function IdFilter(){
+    if(!arrayForCanIDStorage.includes(msg.id)){
+        arrayForCanIDStorage.push(msg.id);
     }
+    arrayForCanIDStorage.forEach(function(element){
+        console.log(element);
+        if(element == msg.id){
+            parsedDataJson["ID"+String(element)]={};
+            parsedDataJson["ID"+String(element)]["id"]=msg.id;
+            parsedDataJson["ID"+String(element)]["data"] = msg.data;
+            
+        }
+    });
+
+}
+IdFilter();
 
 
+var dataOutput = JSON.stringify(parsedDataJson,function(k,v){
+    if(v instanceof Array)
+        return JSON.stringify(v);
+    return v;
+    },2);
 
-
-    if(msg.id == 112){
-        parsedDataJson["can2"] = {};
-        parsedDataJson.can2["id"] = msg.id;
-        parsedDataJson.can2["data"] = msg.data;
-        parsedDataJson.can2["timecode"] = TimeInGoodFormat;
-    }
-
-
-
-    var dataOutput = JSON.stringify(parsedDataJson,null,"\t");
-
-    fs.writeFile("data.json",dataOutput,(err)=>{});
+fs.writeFile("data.json",dataOutput,(err)=>{});
 
 
 });
