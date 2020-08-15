@@ -2,6 +2,9 @@ var can = require('socketcan');
 var fs = require("fs");
 
 var arrayForCanIDStorage = [];
+var arrayForCanDataIdentifierStorage = [];
+
+
 
 var channel = can.createRawChannel("can0", true);
 
@@ -23,17 +26,31 @@ fs.readFile("data.json","utf8",function(err,data){
 
 
 function IdFilter(){
+
     if(!arrayForCanIDStorage.includes(msg.id)){
         arrayForCanIDStorage.push(msg.id);
     }
     arrayForCanIDStorage.forEach(function(element){
-        console.log(element);
+
         if(element == msg.id){
             parsedDataJson["ID"+String(element)]={};
             parsedDataJson["ID"+String(element)]["id"]=msg.id;
-            parsedDataJson["ID"+String(element)]["data"] = msg.data;
-          
-            
+
+            var firstByte = Array.from(msg.data)[0];
+            if(!(firstByte - 1)<= 0){
+
+                if(!arrayForCanDataIdentifierStorage.includes(firstByte)){
+                    if(!arrayForCanDataIdentifierStorage.includes(1)){
+                        arrayForCanDataIdentifierStorage.push(1);
+                    };
+                    arrayForCanDataIdentifierStorage.push(firstByte);
+                    arrayForCanDataIdentifierStorage.sort(function(a, b){return a-b});
+                }
+            }else{             
+                console.log(arrayForCanDataIdentifierStorage);
+                arrayForCanDataIdentifierStorage = [];
+            }
+
         }
     });
 
@@ -55,4 +72,3 @@ fs.writeFile("data.json",dataOutput,(err)=>{});
 ;});
 
 channel.start();
-
