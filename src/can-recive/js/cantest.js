@@ -79,18 +79,27 @@ function DataFilter(){
     }
 
     if(newCanID != oldCanID){
-        console.log(testArray);
+        PutDataFilterIntoJSON();
         testArray = [];   
         testArray.push(firstByte);
-        testArray.push(msg.data);  
+        // testArray.push(Array.from(msg.data));  
     }else{      
         testArray.push(firstByte);
-        testArray.push(msg.data);
+        // testArray.push(Array.from(msg.data));
+
     }
     
 }
-// console.log(msg.id);
 
+
+function PutDataFilterIntoJSON(){
+    console.log(testArray);
+
+
+    parsedDataJson["IDa"]="testArray";
+    parsedDataJson["IDb"]="testArray";
+
+}
 
 IdFilter();
 DataFilter();
@@ -106,7 +115,6 @@ fs.writeFile("data.json",dataOutput,(err)=>{});
 
 
 ;});
-// Counter++;
 });
 
 
