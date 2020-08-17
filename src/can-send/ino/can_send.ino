@@ -25,22 +25,30 @@ void setup()
     Serial.println("CAN BUS Shield init ok!");
 }
 
-unsigned char stmpAn[8] = {1,1,0,0,0,0,0,0};
-unsigned char stmpAus[8] = {1,0,0,0,0,0,0,0};
+unsigned char a[8] = {1,1,0,0,0,0,0,0};
+unsigned char b[8] = {2,1,0,0,0,0,0,0};
+unsigned char c[8] = {3,0,0,0,0,0,0,0};
+unsigned char d[8] = {4,0,0,0,0,0,0,0};
 
 
 void loop()
 {   Serial.println("In loop");
     // send data:  id = 0x00, standard frame, data len = 8, stmp: data buf
     
-    if(digitalRead(Button)== HIGH){
-      CAN.sendMsgBuf(0x60,0, 8, stmpAn);
-      delay(1000);  
-    }
-    
-    if(digitalRead(Button) == LOW){     
-      CAN.sendMsgBuf(0x70,0, 8, stmpAus);
-      delay(1000);  
-    }
+      CAN.sendMsgBuf(0x60,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x60,0, 8, b);
+      delay(100);
+      CAN.sendMsgBuf(0x60,0, 8, c);
+      delay(100);
+      CAN.sendMsgBuf(0x70,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x70,0, 8, b);
+      delay(100);
+      CAN.sendMsgBuf(0x70,0, 8, d);
+      delay(100);
+      CAN.sendMsgBuf(0x70,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x70,0, 8, a);
+      delay(100);
 }
-
