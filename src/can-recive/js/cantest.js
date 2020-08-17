@@ -4,6 +4,8 @@ var fs = require("fs");
 
 var arrayForCanIDStorage = [];
 var arrayForCanDataIdentifierStorage = [];
+var testArray = [];
+
 
 var newCanID;
 var oldCanID;
@@ -12,7 +14,8 @@ var i = 0;
 
 var channel = can.createRawChannel("can0", true);
 
-var Counter = 0;
+var Counter;
+var CounterB = 0;
 
 channel.addListener("onMessage", function(msg) {
   
@@ -60,23 +63,31 @@ var firstByte = Array.from(msg.data)[0];
 
 function DataFilter(){
 
-    if(Counter == 1){
-        oldCanID = msg.id;
-    }else if (Counter == 2){
-        Counter = 0;
-        newCanID = msg.id;
-    }
-    
-    if(newCanID != oldCanID){
-        i=0;
-        
-    }else{
-        if(i == 0){
-            console.log("i");
-        }
-        i++;
+    if(Counter === undefined){
+        Counter = 1;
     }
 
+    switch(Counter){
+        case 1:
+            oldCanID = msg.id;
+            Counter = 2;
+            break;
+        case 2:
+            newCanID = msg.id;
+            Counter = 1;
+            break;
+    }
+
+    if(newCanID != oldCanID){
+        console.log(testArray);
+        testArray = [];   
+        testArray.push(firstByte);
+        testArray.push(msg.data);  
+    }else{      
+        testArray.push(firstByte);
+        testArray.push(msg.data);
+    }
+    
 }
 // console.log(msg.id);
 
@@ -95,7 +106,7 @@ fs.writeFile("data.json",dataOutput,(err)=>{});
 
 
 ;});
-Counter++;
+// Counter++;
 });
 
 
