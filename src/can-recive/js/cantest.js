@@ -1,13 +1,18 @@
+"use strict";
 var can = require('socketcan');
 var fs = require("fs");
 
 var arrayForCanIDStorage = [];
 var arrayForCanDataIdentifierStorage = [];
 
+var newCanID;
+var oldCanID;
 
+var i = 0;
 
 var channel = can.createRawChannel("can0", true);
 
+var Counter = 0;
 
 channel.addListener("onMessage", function(msg) {
   
@@ -46,16 +51,38 @@ function IdFilter(){
                     arrayForCanDataIdentifierStorage.push(firstByte);
                     arrayForCanDataIdentifierStorage.sort(function(a, b){return a-b});
                 }
-            }else{             
-                console.log(arrayForCanDataIdentifierStorage);
-                arrayForCanDataIdentifierStorage = [];
-            }
 
+            }
         }
     });
+}
+var firstByte = Array.from(msg.data)[0];
+
+function DataFilter(){
+
+    if(Counter == 1){
+        oldCanID = msg.id;
+    }else if (Counter == 2){
+        Counter = 0;
+        newCanID = msg.id;
+    }
+    
+    if(newCanID != oldCanID){
+        i=0;
+        
+    }else{
+        if(i == 0){
+            console.log("i");
+        }
+        i++;
+    }
 
 }
+// console.log(msg.id);
+
+
 IdFilter();
+DataFilter();
 
 
 var dataOutput = JSON.stringify(parsedDataJson,function(k,v){
@@ -67,8 +94,11 @@ var dataOutput = JSON.stringify(parsedDataJson,function(k,v){
 fs.writeFile("data.json",dataOutput,(err)=>{});
 
 
+;});
+Counter++;
 });
 
-;});
+
+
 
 channel.start();
