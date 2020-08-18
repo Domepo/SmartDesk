@@ -4,8 +4,12 @@ var fs = require("fs");
 
 var arrayForCanIDStorage = [];
 var arrayForCanDataIdentifierStorage = [];
-var testArray = [];
 
+var ArrayForFirstBytes = [];
+var ArrayForMsgData = [];
+
+
+var storedDatalol;
 
 var newCanID;
 var oldCanID;
@@ -43,6 +47,9 @@ function IdFilter(){
         if(element == msg.id){
             parsedDataJson["ID"+String(element)]={};
             parsedDataJson["ID"+String(element)]["id"]=msg.id;
+            parsedDataJson["ID"+String(element)]["Data"]=msg.data;
+            parsedDataJson["ID"+String(element)]["Timecode"]=TimeInGoodFormat;
+
 
             var firstByte = Array.from(msg.data)[0];
             if(!(firstByte - 1)<= 0){
@@ -78,31 +85,63 @@ function DataFilter(){
             break;
     }
 
-    if(newCanID != oldCanID){
-        PutDataFilterIntoJSON();
-        testArray = [];   
-        testArray.push(firstByte);
-        // testArray.push(Array.from(msg.data));  
-    }else{      
-        testArray.push(firstByte);
-        // testArray.push(Array.from(msg.data));
+    if(!(arrayForCanIDStorage.length == 1)){
+        if(newCanID != oldCanID){
+            PutDataFilterIntoJSON();
+            ArrayForFirstBytes = [];   
+            ArrayForMsgData = [];   
 
+            ArrayForFirstBytes.push(firstByte);
+            ArrayForMsgData.push(Array.from(msg.data));  
+        }else{      
+            ArrayForFirstBytes.push(firstByte);
+            ArrayForMsgData.push(Array.from(msg.data));
+
+        }
+
+    }else{
+        PutDataFilterIntoJSON();
+        ArrayForFirstBytes = [];   
+        ArrayForMsgData = [];   
+
+        ArrayForFirstBytes.push(firstByte);
+        ArrayForMsgData.push(Array.from(msg.data));  
     }
     
 }
 
 
+
+
 function PutDataFilterIntoJSON(){
-    console.log(testArray);
+    // console.log(ArrayForFirstBytes);
+    // console.log(ArrayForMsgData);
+    var FirstBytePlusMsgData = {
 
+    };
+    console.log(ArrayForFirstBytes);
+    console.log(ArrayForMsgData);
 
-    parsedDataJson["IDa"]="testArray";
-    parsedDataJson["IDb"]="testArray";
-
+    if(!(arrayForCanIDStorage.length == 1)){
+        for(var i = 0;i<ArrayForFirstBytes.length;i++){ 
+            FirstBytePlusMsgData[ArrayForFirstBytes[i]] = ArrayForMsgData[i];
+        }
+        // console.log(FirstBytePlusMsgData);
+        storedDatalol  =  FirstBytePlusMsgData;
+    }
+    else{
+        FirstBytePlusMsgData[ArrayForFirstBytes] = ArrayForMsgData;
+        storedDatalol  =  FirstBytePlusMsgData;
+        console.log(FirstBytePlusMsgData);
+    }
 }
 
 IdFilter();
 DataFilter();
+
+if(storedDatalol != undefined){
+    parsedDataJson["ID"+msg.id]["DataIdentifier"]=storedDatalol;
+}
 
 
 var dataOutput = JSON.stringify(parsedDataJson,function(k,v){
