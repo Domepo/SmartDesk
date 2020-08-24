@@ -1,3 +1,4 @@
+  
 // demo: CAN-BUS Shield, send data
 //Com 8
 #include <mcp_can.h>
@@ -50,5 +51,23 @@ void loop()
       CAN.sendMsgBuf(0x70,0, 8, a);
       delay(100);
       CAN.sendMsgBuf(0x70,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x50,0, 8, d);
+      delay(100);
+      CAN.sendMsgBuf(0x50,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x50,0, 8, a);
+      delay(100);
+       CAN.sendMsgBuf(0x10,0, 8, d);
+      delay(100);
+      CAN.sendMsgBuf(0x10,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x10,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x00,0, 8, d);
+      delay(100);
+      CAN.sendMsgBuf(0x00,0, 8, a);
+      delay(100);
+      CAN.sendMsgBuf(0x00,0, 8, a);
       delay(100);
 }
