@@ -7,6 +7,7 @@
 // the cs pin of the version after v1.1 is default to D9
 // v0.9b and v1.0 is default D10
 const int SPI_CS_PIN = 10;
+int lastButtonState = 0;     // previous state of the button
 
 const int Button = 2;
 
@@ -26,7 +27,7 @@ void setup()
     Serial.println("CAN BUS Shield init ok!");
 }
 
-unsigned char a[8] = {1,1,0,0,0,0,0,0};
+unsigned char a[8] = {4,1,0,0,0,0,0,0};
 unsigned char b[8] = {2,1,0,0,0,0,0,0};
 unsigned char c[8] = {3,0,0,0,0,0,0,0};
 unsigned char d[8] = {4,0,0,0,0,0,0,0};
@@ -34,40 +35,22 @@ unsigned char d[8] = {4,0,0,0,0,0,0,0};
 
 void loop()
 {   Serial.println("In loop");
+
     // send data:  id = 0x00, standard frame, data len = 8, stmp: data buf
-    
+
+  int buttonState = digitalRead(Button);
+
+  if (buttonState != lastButtonState) {
+    if (buttonState == HIGH) {
       CAN.sendMsgBuf(0x60,0, 8, a);
       delay(100);
-      CAN.sendMsgBuf(0x60,0, 8, b);
+    } else {
+      CAN.sendMsgBuf(0x60,0, 8, d);
       delay(100);
-      CAN.sendMsgBuf(0x60,0, 8, c);
-      delay(100);
-      CAN.sendMsgBuf(0x70,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x70,0, 8, b);
-      delay(100);
-      CAN.sendMsgBuf(0x70,0, 8, d);
-      delay(100);
-      CAN.sendMsgBuf(0x70,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x70,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x50,0, 8, d);
-      delay(100);
-      CAN.sendMsgBuf(0x50,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x50,0, 8, a);
-      delay(100);
-       CAN.sendMsgBuf(0x10,0, 8, d);
-      delay(100);
-      CAN.sendMsgBuf(0x10,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x10,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x00,0, 8, d);
-      delay(100);
-      CAN.sendMsgBuf(0x00,0, 8, a);
-      delay(100);
-      CAN.sendMsgBuf(0x00,0, 8, a);
-      delay(100);
+    }
+    delay(50);
+  }
+  lastButtonState = buttonState;
+    
+      
 }
